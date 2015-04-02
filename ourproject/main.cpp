@@ -4,7 +4,7 @@
 #include <SDL/SDL.h>
 #include <stdlib.h>
 #include <SDL/SDL_ttf.h>
-
+#include <ourproject.h>
 
 using namespace std;
 
