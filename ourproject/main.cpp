@@ -1,21 +1,15 @@
-#include <iostream>
-#include <stdio.h>
-#include <ctime>
-#include <SDL/SDL.h>
-#include <stdlib.h>
-#include <SDL/SDL_ttf.h>
 #include <ourproject.h>
-
+#include <SDL/SDL_image.h>
 using namespace std;
 
 int main()
 {
-    if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+    /*if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         printf( "Unable to init SDL: %s\n", SDL_GetError() );
         return 1;
     }
-    SDL_Surface * screen = SDL_SetVideoMode(550, 420, 16, SDL_HWSURFACE | SDL_DOUBLEBUF);
+    SDL_Surface * screen = SDL_SetVideoMode(1360, 768, 16, SDL_HWSURFACE | SDL_FULLSCREEN);
     if ( !screen )
     {
         printf("Unable to set video mode: %s\n", SDL_GetError());
@@ -28,11 +22,22 @@ int main()
         return 1;
     }
 
+    SDL_Surface* block = IMG_Load("1687588.jpg");
+    SDL_Rect desc; // координаты, куда нужно наложить часть.
+    desc.x = 100;
+    desc.y = 100;
+    SDL_Rect src; // накладываемый прямоугольник.
+    src.x = 0;
+    src.y = 0;
+    src.w = 100;
+    src.h = 100;
+    SDL_BlitSurface(block, NULL, screen, &desc);
     SDL_Flip(screen);
-    while(1){
-        cout << 1 << endl;
-    }
+    SDL_Delay( 10000 );*/
+    OurProject a;
+    a.init();
+    a.MakeScreen();
+    a.startScreen();
     return 0;
-
 }
 

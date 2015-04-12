@@ -9,4 +9,4 @@ SOURCES += main.cpp \
 HEADERS += \
     ourproject.h
 
-LIBS += -lSDL
+LIBS += -lSDL -lSDL_image
