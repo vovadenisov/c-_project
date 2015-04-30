@@ -1,0 +1,131 @@
+22
+back
+1
+Background 0 0 img/main_bg.png
+jerry
+2 
+Jerry 200 15 img/Jerry.png
+JerryOn 200 15 img/Jerry_active.png
+jorge
+2
+Jorge 310 15 img/Jorge.png
+JorgeOn 310 15 img/Jorge_active.png
+dave
+2
+Dave 420 15 img/Dave.png
+DaveOn 420 15 img/Dave_active.png
+stuart
+2
+Stuart 530 15 img/Stuart.png
+StuartOn 530 15 img/Stuart_active.png
+mark
+2
+Mark 640 15 img/Mark.png
+MarkOn 640 15 img/Mark_active.png
+tim
+2
+Tim 750 15 img/Tim.png
+TimOn 750 15 img/Tim_active.png
+phil
+2
+Phil 860 15 img/Phil.png
+PhilOn 860 15 img/Phil_active.png
+panic
+1
+Panic 1230 35 img/panic_Image.png
+offBtn
+1
+OnOff 50 35 img/off_Image.png
+1battaryOne
+3
+Full 1010 45 img/Battery_full.png
+Mid 1010 45 img/Battery_mid.png
+Low 1010 45 img/Battery_full.png
+battaryToo
+3
+Full 1110 45 img/Battery_full.png
+Mid 1110 45 img/Battery_mid.png
+Low 1110 45 img/Battery_full.png
+speed
+1
+Speed 700 200 img/speedometer_Image.png
+arrow
+1
+Arrow 835 263 img/speed-arrow_Image.png
+map
+8
+Back 30 319 img/map-bg_Image.png
+btnMap
+2
+ButMapOn 32 690 img/MAP-on_Image.png
+ButMapOff 32 690 img/Image_58_Image.png
+btnLid
+2
+ButLidOff 136 690 img/LiDAR-off_Image.png
+ButLidOn 136 690 img/Image 56_Image.png
+btnFPV
+2
+FPVOff 242 690 img/FPV-off_Image.png
+FPVOn 242 690 img/Image 54_Image.png
+MapMin
+1
+Minion 400 400 img/minion-top-view_Image.png
+micro
+2
+Micro 1200 213 img/Image_27_Image.png
+NoMicro 1200 213 img/no-mic_Image.png
+dinamic
+2
+Dinamic 1200 313 img/sound_Image.png
+NoDinamic 1200 313 img/Image_30_Image.png
+text
+1
+textArea 700 470 img/text-bg_Image.png
+
+
+
+
+
+700 600 img/hand-control-base_Image.png
+1000 600 img/hand-control-base_Image.png
+800 610 img/cleaned-up-with-buttons.png
+
+
+
+moduls and element name:
+power
+	on
+minions
+	stuart
+	stuart_active
+	jerry
+	jerry_active
+	jorge
+	jorge_active
+	tim
+	tim_active
+	dave
+	dave_active
+	phil
+	phil_active
+	mark
+	mark_active
+battery
+	bat1Full
+	bat1Mid
+	bat1Low
+	bat2Full
+	bat2Mid
+	bat2Low
+panic
+	panic
+map
+	map
+	mapMinion
+	btnMap_active
+	btnMap
+speed
+	back
+	arrow
+text
+	textAria
