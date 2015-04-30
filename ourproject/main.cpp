@@ -1,43 +1,62 @@
 #include <ourproject.h>
+#include <ReadFile.h>
 #include <SDL/SDL_image.h>
 using namespace std;
 
 int main()
 {
-    /*if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        printf( "Unable to init SDL: %s\n", SDL_GetError() );
-        return 1;
+    OurProject graphic;
+    map<string, map<string, form> > * arr;
+    arr = read_file("images.txt");
+
+    //проверка корректности чтения
+    for (map<string,map<string,form> >::iterator it = (*arr).begin();it != (*arr).end(); it++){
+        for(map<string,form>::iterator on = (*arr)[it->first].begin(); on != (*arr)[it->first].end(); on++ ){
+            cout << it->first << " " << on->first << " " << on->second.x << " " << on->second.y << " " << on->second.path << endl;
+        }
     }
-    SDL_Surface * screen = SDL_SetVideoMode(1360, 768, 16, SDL_HWSURFACE | SDL_FULLSCREEN);
-    if ( !screen )
-    {
-        printf("Unable to set video mode: %s\n", SDL_GetError());
-        return 1;
+    if (!graphic.init(arr)){
+       cout << "я упал" << endl;
     }
 
-    if (!screen)
-    {
-        printf("Can't set videomode: %s", SDL_GetError());
-        return 1;
-    }
+    delete arr;
 
-    SDL_Surface* block = IMG_Load("1687588.jpg");
-    SDL_Rect desc; // координаты, куда нужно наложить часть.
-    desc.x = 100;
-    desc.y = 100;
-    SDL_Rect src; // накладываемый прямоугольник.
-    src.x = 0;
-    src.y = 0;
-    src.w = 100;
-    src.h = 100;
-    SDL_BlitSurface(block, NULL, screen, &desc);
-    SDL_Flip(screen);
-    SDL_Delay( 10000 );*/
-    OurProject a;
-    a.init();
-    a.MakeScreen();
-    a.startScreen();
+//    while (!done)
+//    {
+//        while (SDL_PollEvent(&event)) // Пока есть хоть одно необработанное событие
+//        {
+//            swtich(event.type)
+//            {
+//                case SDL_QUIT: // Событие выхода
+//                    done = true;
+//            }
+//        }
+//    }
+
+    SDL_Event event;
+    bool done = false;
+    while(!done){
+        graphic.MakeScreen();
+        graphic.startScreen();
+        while (SDL_PollEvent(&event)){
+            switch(event.type){
+                case SDL_QUIT: // Событие выхода
+                    done = true;
+                case SDL_MOUSEBUTTONDOWN:{
+                    if (event.button.button = SDL_BUTTON_LEFT){
+                        string* modName = new string;
+                        int* state = new int(0);
+                        if (graphic.detectModule(event.button.x,event.button.y,modName,state)){
+                            graphic.selectFunc(*modName, *state);
+                            delete modName;
+                            delete state;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+    }
     return 0;
 }
 
