@@ -1,159 +1,137 @@
 #ifndef ALLCLASS_H
 #define ALLCLASS_H
+#include <iostream>
 #include <string>
+#include <SDL/SDL.h>
+#include <iostream>
+#include <stdio.h>
+#include <ctime>
+#include <stdlib.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_image.h>
+#include <map>
+#include <vector>
+#include <fstream>
 #include <container.h>
-#include <ourproject>
+#include <form.h>
+#include <ourproject.h>
 
-/*class Container
-{
+using namespace std;
+
+class RoundBtn:public Container{
 public:
-    virtual Container() = 0;//виртуальный конструктор
-    virtual ~Container() = 0;//виртуальный деструктор
-    virtual void onClick(int x, int y) = 0;//обрабатывает возможное нажатие принимает координаты нажатия мыши,
-    //вызывает функцию класа
-    virtual void change(map<string,state>* allState) = 0;//вызывается при приходе очередного массива состояний.
-    //вытаскивает нужное состояние по имени
-    virtual img Drow();
+    RoundBtn(read params):Container(params){}
 protected:
-    virtual void move(int newx,int newy, int angle) = 0;//функция перегружается для классов, где нужно движение
-    //или поворот
-    vector<img>* allImg;//массив изображений
-    int isActive = 0;//индекс активного изображения.
-    string* name;//имя модуля
-};*/
+    virtual bool inRange(int x, int y);
+};
 
-class Minion:public Container{
+class RectBtn:public Container{
 public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
+    RectBtn(read params):Container(params){}
+protected:
+    virtual bool inRange(int x, int y);
+};
+
+class Background:public Container{
+public:
+    Background(read params);
+};
+
+class Minion:public RectBtn{
+public:
+    Minion(read params, string IP);
+    bool onClick(int x, int y);
     void change(map<string, state> *allState);
-    img Drow();
 protected:
-    void move(int newx,int newy, int angle){}
     string Ip;
 };
 
-class Arrow:public Container{
+class OffBtn:public RoundBtn{
 public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
+    OffBtn(read params);
+    bool onClick(int x, int y);
 };
 
-
-class Power:public Container{
+class Battary:public Container{
 public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
+    Battary(read params);
     void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class Batary:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class Microphone:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class dinamic:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class Map:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class btnMap:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class btnLidar:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
-};
-
-class btnFpv:public Container{
-public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
-    void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
 };
 
 class Speed:public Container{
 public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
+    Speed(read params);
+};
+
+class Arrow:public Container{
+public:
+    Arrow(read params);
     void change(map<string, state> *allState);
-    img Drow();
 protected:
-    void move(int newx,int newy, int angle){}
+    void move(int newx,int newy, int angle);
+};
+
+class Map:public RectBtn{
+public:
+    Map(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
+};
+
+class BtnMap:public RectBtn{
+public:
+    BtnMap(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
+};
+
+class BtnLid:public RectBtn{
+public:
+    BtnLid(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
+};
+
+class BtnFPV:public RectBtn{
+public:
+    BtnFPV(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
+};
+
+class MapMin:public Container{
+public:
+    MapMin(read params);
+    void change(map<string, state> *allState);
+protected:
+    void move(int newx,int newy, int angle);
+};
+
+class Micro:public RectBtn{
+public:
+    Micro(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
+};
+
+class Dinamic:public RectBtn{
+public:
+    Dinamic(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
 };
 
 class Text:public Container{
 public:
-    Minion(read params);
-    ~Minion();
-    void onClick(int x, int y);
+    Text(read params);
     void change(map<string, state> *allState);
-    img Drow();
-protected:
-    void move(int newx,int newy, int angle){}
+};
+
+class Panic:public RoundBtn{
+public:
+    Panic(read params);
+    bool onClick(int x, int y);
+    void change(map<string, state> *allState);
 };
 
 #endif // ALLCLASS_H

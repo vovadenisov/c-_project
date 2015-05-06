@@ -10,38 +10,51 @@
 #include <stdlib.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
+#include <form.h>
 
 using namespace std;
 
-struct img{
-    SDL_Rect desc; // координаты, куда нужно наложить часть.
-    SDL_Surface* screen;//screen
-    //bool visible = true;
-};
 
-struct state{
-    int dX;//изменение кординаты по х
-    int dY;//изменение кординаты по у
-    int dAngle;//изменение угла
-    int active;// активный индекс
-};
-
-class Container
-{
+class Container{
 public:
-    Container(){}//виртуальный конструктор
-    ~Container(){}//виртуальный деструктор
-    virtual void onClick(int x, int y) = 0;//обрабатывает возможное нажатие принимает координаты нажатия мыши,
+    Container(read Params);
+    //обрабатывает возможное нажатие принимает координаты нажатия мыши,
     //вызывает функцию класа
-    virtual void change(map<string,state>* allState) = 0;//вызывается при приходе очередного массива состояний.
-    //вытаскивает нужное состояние по имени
-    virtual img Drow();
-private:
-    virtual void move(int newx,int newy, int angle) = 0;//функция перегружается для классов, где нужно движение
-    //или поворот
-    vector<img>* allImg;//массив изображений
-    int isActive = 0;//индекс активного изображения.
-    string* name;//имя модуля
+    virtual bool onClick(int x, int y){ return false;}
+
+    //вызывается при приходе очередного массива состояний. вытаскивает нужное состояние по имени
+    virtual void change(map<string,state>* allState){}
+
+    //возвращает объект картинки
+    virtual img Drow() {
+        return allImg[isActive];
+    }
+
+    //возвращает номер группы
+    int Group(){
+        return group;
+    }
+
+    //выключение модуля
+    virtual void decont(){
+        isActive = 0;
+    }
+
+protected:
+    //функция перегружается для классов, где нужно движение или поворот
+    virtual void move(int newx,int newy, int angle){}
+
+    //массив изображений
+    vector<img> allImg;
+
+    //индекс активного изображения.
+    int isActive = 0;
+
+    //имя модуля
+    string name;
+
+    //группа по умолчанию -1 (без группы)
+    int group = -1;
 };
 
 #endif // CONTAINER_H

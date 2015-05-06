@@ -1,6 +1,6 @@
 #ifndef OURPROJECT_H
 #define OURPROJECT_H
-
+#include <iostream>
 #include <string>
 #include <SDL/SDL.h>
 #include <iostream>
@@ -8,45 +8,55 @@
 #include <ctime>
 #include <stdlib.h>
 #include <SDL/SDL_ttf.h>
-#include <ourproject.h>
 #include <SDL/SDL_image.h>
 #include <map>
 #include <vector>
-#include "form.h"
-#include "elemcont.h"
+#include <fstream>
 #include <container.h>
+#include <allclass.h>
+#include <form.h>
 
 using namespace std;
-
-//struct img{
-//    SDL_Rect desc; // координаты, куда нужно наложить часть.
-//    SDL_Surface* screen;//screen
-//    bool visible = true;
-//};
-
-
-
-//struct block{
-//    string name;
-//    element<T>* elements;
-//    block* next;
-//};
-
-
 
 class OurProject {
 public:
     OurProject();
-    bool init(/*map<string, map<string, form> >**/ vector<com>&);
+
+    //инициализация SDL lib
+    bool init();
+
+    //изменение отображаемой поверхности
     bool startScreen();
+
+    //применение изменений
     bool MakeScreen();
-    //bool detectModule(int, int, string*, string*);//определение блока, на который мы тыкнули
-    //void selectFunc(string, string);//определение функции подходящей для этого модуля
+
+    //чтение файла и наполнение классов объектов
+    void makeClass(char* );
+
+    //внешнее изменение состояния объектов.
+    void change();
+
+    //функция обработчик событий
+    bool choiceEvent(SDL_Event* event);
+
+    //надо ли отрисовываться
+    bool active = true;
+
 private:
-    vector<Container*>* moduls;
-    void selectClass(read& value, Container*& position);
-//    map <string,map<string, img> > *arr;
-//    map <string, string > *state;
+    // востановление активности модулей. (только 1 модуль из группы должен быть активен)
+    void correctModule(int, int);
+
+    //запуск события onClick объектов и исправление ошибок состояний.
+    void onClick(int, int);
+
+    //вектор контейнеров
+    vector<Container*> moduls;
+
+    //выбор класса при по имени в value
+    Container* selectClass(read& value);
+
+    //основная отображаемая поверхность.
     SDL_Surface* back;
 };
 #endif // OURPROJECT_H

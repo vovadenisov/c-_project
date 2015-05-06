@@ -1,101 +1,79 @@
 #include "ourproject.h"
-#include <string>
-#include <fstream>
-#define BACK "0back"
-
-using namespace std;
+//описание графического класса
 
 OurProject::OurProject(){
-    moduls = new vector<Container>;
-    //arr = new map<string, map<string, img> >;
-    //state = new map<string, string>;
     back = NULL;
 }
 
-void OurProject::SelectClass(read& value, Container*& position){
-    switch (value.nameBlock.c_str())
-    case "minion":{
-        break;
+void OurProject::makeClass(char *file_name){
+    ifstream pFile;
+    pFile.open(file_name);
+
+    if (pFile == NULL)
+    {
+        perror ("Error opening file");
     }
-    case "arrow":{
-        break;
+    size_t size;
+    pFile >> size;
+    for (size_t i = 0; i < size; i++){
+        read buf;
+        pFile >> buf.nameBlock;
+        size_t modSize;
+        pFile >> modSize;
+        for (size_t j = 0; j < modSize; j++){
+            com elBuf;
+            pFile >> elBuf.x;
+            pFile >> elBuf.y;
+            pFile >> elBuf.path;
+            buf.images.push_back(elBuf);
+        }
+        moduls.push_back(selectClass(buf));
     }
-    case "panic":{
-        break;
-    }
-    case "start":{
-        break;
-    }
-    case "map":{
-        break;
-    }
-    case "batary":{
-        break;
-    }
-        case ""
 }
 
-/*
-struct com{
-    string name;
-    form params;
-};
+void OurProject::onClick(int x, int y){
+    for (int i = moduls.size() - 1; i >= 0; i--){
+        if (moduls[i]->onClick(x,y)){
+            if (moduls[i]->Group() != -1){
+                correctModule(i, moduls[i]->Group());
+            }
+            if (moduls[i]->Group() == -2){
+                active = false;
+            }
+            break;
+        }
+    }
+}
 
-struct read{
-    string nameBlock;
-    vector<com>* images;
-};
-*/
+void OurProject::correctModule(int valid, int group){
+    for (int i = 0; i < moduls.size(); i++){
+        if ((group == moduls[i]->Group()) && i != valid){
+            moduls[i]->decont();
+        }
+    }
+}
 
-bool OurProject::init(/*map<string, map<string, form> >* come*/ vector<read>& come /* кто мне подскажет кто расскажет, что мы принимаем...*/){
-    //size = comSize;
+//void OurProject::makeState(){
+//    for (int i = 0; i < moduls[i].size(); i++){
+//        state buf = moduls[i].getState();
+//        for(int i = 0; i < actualState.size(); i++){
+//            if (actualState[i].name == buf.name){
+//                actualState[i].x = buf.x;
+//                actualState[i].y = buf.y;
+//                actualState[i].angle = buf.angle;
+//                actualState[i].active = buf.active;
+//            }
+//        }
+//        //
+//    }
+//}
+
+bool OurProject::init(){
     if ( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         cout << "1" << endl;
         return false;
     }
-    //а тут начинается полный треш
-    moduls = new vector<Container*>(come.size());
-    for (int i = 0; i < come.size(); i++){
-        selectClass( come[i], (*moduls)[i] );
-    }//заполнили массив элементов
-
-    /*arr = new map <string,map<string, img> >;
-    for (map<string,map<string,form> >::iterator it = (*come).begin();it != (*come).end(); it++){
-        for(map<string,form>::iterator on = (*come)[it->first].begin(); on != (*come)[it->first].end(); on++ ){
-            (*arr)[it->first][on->first].desc.x = on->second.x;
-            cout << (*arr)[it->first][on->first].desc.x;
-            (*arr)[it->first][on->first].desc.y = on->second.y;
-            (*arr)[it->first][on->first].screen = IMG_Load(on->second.path.c_str());
-            if ((*arr)[it->first][on->first].screen == NULL){
-                cout << "2" << endl;
-                return false;
-            }
-        }
-    }
-    for (map<string,map<string,img> >::iterator it = (*arr).begin();it != (*arr).end(); it++){
-        state[it->firts]= (it->second)
-//        if((*arr)[it->first][on->first].visible){
-//                SDL_BlitSurface( (*arr)[it->first][on->first].screen, NULL, back, &((*arr)[it->first][on->first].desc));
-//        }
-    }*/ //старый вариант
-
-    //уже непонятно для чего это было нужно. супер старый вариант.
-    //all = new img[size];
-//    for (int i = 0; i < size; i++){
-//        all[i].screen = NULL;
-//    }
-    //проходимся по массиву и создаем массив загруженных и проинициализированных картинок.
-    /*for (int i = 0; i < size; i++){
-        arr[i].desc.x = arr[i].x;
-        all[i].desc.y = arr[i].y;
-        cout << arr[i].path << endl;
-        all[i].screen = IMG_Load(arr[i].path.c_str());
-        if (all[i].screen == NULL){
-            cout << "2" << endl;
-            return false;
-        }
-    }*/
     back = SDL_SetVideoMode(1360, 768, 16, SDL_HWSURFACE);
     if ( !back )
     {
@@ -106,53 +84,123 @@ bool OurProject::init(/*map<string, map<string, form> >* come*/ vector<read>& co
 }
 
 bool OurProject::MakeScreen(){
-    for (int i = 0; i < moduls->size(); i++){
-        SDL_BlitSurface( (*moduls)[i].drow().screen, NULL, back, &((*moduls)[i].drow().desc));
+    for (size_t i = 0; i < moduls.size(); i++){
+        img buf = (*(moduls[i])).Drow();
+        SDL_BlitSurface( buf.screen, NULL, back, &(buf.desc));
     }
-//    for (map<string,map<string,img> >::iterator it = (*arr).begin();it != (*arr).end(); it++){
-//        for(map<string,img>::iterator on = (*arr)[it->first].begin(); on != (*arr)[it->first].end(); on++ ){
-//            if((*arr)[it->first][on->first].visible){
-//                SDL_BlitSurface( (*arr)[it->first][on->first].screen, NULL, back, &((*arr)[it->first][on->first].desc));
-//            }
-//        }
-//    }
-//    for (int i = 0; i < size; i++){
-//        SDL_BlitSurface(all[i].screen, NULL, back, &all[i].desc);
-//    }
+    return true;
 }
 
 bool OurProject::startScreen(){
     SDL_Flip(back);
+    return true;
 }
 
-//весь код ниже лег на плечи классов
+bool OurProject::choiceEvent(SDL_Event* event){
+    while (SDL_PollEvent(event)){
+        switch(event->type){
+            case SDL_QUIT: // Событие выхода
+                active = true;
+            case SDL_MOUSEBUTTONDOWN:{
+                if (event->button.button == SDL_BUTTON_LEFT){
+                    onClick(event->button.x,event->button.y);
+                }
+                break;
+            }
+        }
+    }
+}
 
-//bool belong(int cord, int range, int come){
-//    return (come > cord && come < cord + range);
-//}
-
-//bool OurProject::detectModule(int x, int y, string* name, string* state){
-//    for (map<string,map<string,img> >::iterator it = (*arr).begin();it != (*arr).end(); it++){
-//        for(map<string,img>::iterator on = (*arr)[it->first].begin(); on != (*arr)[it->first].end(); on++ ){
-//            if( belong((*arr)[it->first][on->first].desc.x, (*arr)[it->first][on->first].screen->w, x) &&
-//                 belong((*arr)[it->first][on->first].desc.y, (*arr)[it->first][on->first].screen->h, y)){
-//                *name = it->first;
-//                if (*name != BACK){
-//                    *state = (*state[it->first]);
-//                    return true;
-//                }
-//            }
-//        }
-//    }
-//}
-
-
-
-//void OurProject::selectFunc(string modName, int state){
-//    if (modName == "1stuart"){
-//        cout << "я стюарт" << endl;
-//    }
-//    else
-//        cout << "я не стюарт" << endl;
-
-//}
+Container* OurProject::selectClass(read& value){
+    //должен выбрать класс из всех возможных по имени и вернуть указатель на него, приведенный к контейнеру
+    Container* refundable = NULL;
+    if (value.nameBlock == "back"){
+        Background* back = new Background(value);
+        refundable = back;
+    }
+    if (value.nameBlock == "jerry"){
+        Minion* jerry = new Minion(value,"192.268.0.1");
+        refundable = jerry;
+    }
+    if (value.nameBlock == "jorge"){
+        Minion* jorge = new Minion(value,"192.268.0.1");
+        refundable = jorge;
+    }
+    if (value.nameBlock == "dave"){
+        Minion* dave = new Minion(value,"192.268.0.1");
+        refundable = dave;
+    }
+    if (value.nameBlock == "stuart"){
+        Minion* stuart = new Minion(value,"192.268.0.1");
+        refundable = stuart;
+    }
+    if (value.nameBlock == "mark"){
+        Minion* mark = new Minion(value,"192.268.0.1");
+        refundable = mark;
+    }
+    if (value.nameBlock == "tim"){
+        Minion* tim = new Minion(value,"192.268.0.1");
+        refundable = tim;
+    }
+    if (value.nameBlock == "phil"){
+        Minion* phil = new Minion(value,"192.268.0.1");
+        refundable = phil;
+    }
+    if (value.nameBlock == "panic"){
+        Panic* panic = new Panic(value);
+        refundable = panic;
+    }
+    if (value.nameBlock == "offBtn"){
+        OffBtn* off = new OffBtn(value);
+        refundable = off;
+    }
+    if (value.nameBlock == "battaryOne"){
+        Battary* battaryOne = new Battary(value);
+        refundable = battaryOne;
+    }
+    if (value.nameBlock == "battaryToo"){
+        Battary* battaryToo = new Battary(value);
+        refundable = battaryToo;
+    }
+    if (value.nameBlock == "speed"){
+        Speed* speed = new Speed(value);
+        refundable = speed;
+    }
+    if (value.nameBlock == "arrow"){
+        Arrow* arrow = new Arrow(value);
+        refundable = arrow;
+    }
+    if (value.nameBlock == "map"){
+        Map* ourMap = new Map(value);
+        refundable = ourMap;
+    }
+    if (value.nameBlock == "btnMap"){
+        BtnMap* btnMap = new BtnMap(value);
+        refundable = btnMap;
+    }
+    if (value.nameBlock == "btnLid"){
+        BtnLid* btnLid = new BtnLid(value);
+        refundable = btnLid;
+    }
+    if (value.nameBlock == "btnFPV"){
+        BtnFPV* btnFPV = new BtnFPV(value);
+        refundable = btnFPV;
+    }
+    if (value.nameBlock == "MapMin"){
+        MapMin* mapMin =  new MapMin(value);
+        refundable = mapMin;
+    }
+    if (value.nameBlock == "micro"){
+        Micro* micro =  new Micro(value);
+        refundable = micro;
+    }
+    if (value.nameBlock == "dinamic"){
+        Dinamic* dinamic =  new Dinamic(value);
+        refundable = dinamic;
+    }
+    if (value.nameBlock == "text"){
+        Text* text =  new Text(value);
+        refundable = text;
+    }
+    return refundable;
+}

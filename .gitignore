@@ -1,0 +1,10 @@
+*.[oa]
+*~
+/ourproject/img/
+/ourproject/ourproject.pro.user*
+/ourproject/images.txt*
+/ourproject/*.out*
+/ourproject/*.jpg
+*.txt~
+*.bmp
+
