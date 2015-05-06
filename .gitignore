@@ -7,4 +7,6 @@
 /ourproject/*.jpg
 *.txt~
 *.bmp
-
+*.png
+Makefile
+*.out
