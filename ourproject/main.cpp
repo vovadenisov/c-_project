@@ -11,10 +11,15 @@ int main()
     graphic->makeClass("images.txt");
     graphic->init();
     SDL_Event event;
+    Uint32 start;
     while(graphic->active){
+        start = SDL_GetTicks();
         graphic->MakeScreen();
         graphic->startScreen();
         graphic->choiceEvent(&event);
+        if (1000/19 < SDL_GetTicks() - start){
+            cout << "низкий фпс" << endl;
+        }
     }
     return 0;
 }

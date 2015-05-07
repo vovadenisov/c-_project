@@ -31,7 +31,7 @@ struct img{
     SDL_Surface* screen;//screen
     //bool visible = true;
 };
-
+//state будет нужен, чтобы общаьбся с классом переходником
 struct state{
     string name;
     int x;//изменение кординаты по х

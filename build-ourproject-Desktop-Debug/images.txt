@@ -57,8 +57,8 @@ map
 30 319 img/map-bg_Image.png
 btnMap
 2
-32 690 img/MAP-on_Image.png
 32 690 img/Image_58_Image.png
+32 690 img/MAP-on_Image.png
 btnLid
 2
 136 690 img/LiDAR-off_Image.png

@@ -109,10 +109,19 @@ bool Map::onClick(int x, int y){
 
 //========================================
 
-BtnMap::BtnMap(read params):RectBtn(params){}
+BtnMap::BtnMap(read params):RectBtn(params){
+    group = 2;
+    isActive = 1;
+}
 
 bool BtnMap::onClick(int x, int y){
-    if (inRange(x,y)){
+    if(inRange(x,y)){
+        if(isActive == 0){
+            isActive = 1;
+        }
+        else{
+            isActive = 0;
+        }
         return true;
     }
     return false;
@@ -122,10 +131,18 @@ void BtnMap::change(map<string, state> *allState){}
 
 //========================================
 
-BtnLid::BtnLid(read params):RectBtn(params){}
+BtnLid::BtnLid(read params):RectBtn(params){
+    group = 2;
+}
 
 bool BtnLid::onClick(int x, int y){
     if(inRange(x,y)){
+        if(isActive == 0){
+            isActive = 1;
+        }
+        else{
+            isActive = 0;
+        }
         return true;
     }
     return false;
@@ -135,10 +152,18 @@ void BtnLid::change(map<string, state> *allState){}
 
 //========================================
 
-BtnFPV::BtnFPV(read params):RectBtn(params){}
+BtnFPV::BtnFPV(read params):RectBtn(params){
+    group = 2;
+}
 
 bool BtnFPV::onClick(int x, int y){
-    if (inRange(x,y)){
+    if(inRange(x,y)){
+        if(isActive == 0){
+            isActive = 1;
+        }
+        else{
+            isActive = 0;
+        }
         return true;
     }
     return false;
@@ -162,6 +187,12 @@ Micro::Micro(read params):RectBtn(params){}
 
 bool Micro::onClick(int x, int y){
     if(inRange(x,y)){
+        if(isActive == 0){
+            isActive = 1;
+        }
+        else{
+            isActive = 0;
+        }
         return true;
     }
     return false;
@@ -177,6 +208,12 @@ Dinamic::Dinamic(read params):RectBtn(params){}
 
 bool Dinamic::onClick(int x, int y){
     if(inRange(x,y)){
+        if(isActive == 0){
+            isActive = 1;
+        }
+        else{
+            isActive = 0;
+        }
         return true;
     }
     return false;

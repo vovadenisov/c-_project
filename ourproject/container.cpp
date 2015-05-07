@@ -15,3 +15,7 @@ Container::Container(read params){
         allImg.push_back(buf);
     }
 }
+
+void Container::decont(){
+    isActive = 0;
+}
