@@ -28,6 +28,7 @@ struct read{
 
 struct img{
     SDL_Rect desc; // координаты, куда нужно наложить часть.
+    SDL_Rect* src = NULL;//координаты накладываемого прямоугольника и его размеры
     SDL_Surface* screen;//screen
     //bool visible = true;
 };

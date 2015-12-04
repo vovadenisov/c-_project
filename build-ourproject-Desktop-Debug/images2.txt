@@ -1,4 +1,4 @@
-22
+19
 back
 1
 0 0 img/main_bg.png
@@ -38,24 +38,18 @@ offBtn
 50 35 img/off_Image.png
 batteryOne
 5
-1010 45 img/Battery_full.png
-1010 45 img/Battery_mid.png
-1010 45 img/Battery_low.png
-1010 45 img/Battery_empty.png
-1010 45 img/Battery_unplugged.png
+700 300 img/Battery_full.png
+700 300 img/Battery_mid.png
+700 300 img/Battery_low.png
+700 300 img/Battery_empty.png
+700 300 img/Battery_unplugged.png
 batteryTow
 5
-1110 45 img/Battery_full.png
-1110 45 img/Battery_mid.png
-1110 45 img/Battery_low.png
-1110 45 img/Battery_empty.png
-1110 45 img/Battery_unplugged.png
-speed
-1
-700 200 img/speedometer_Image.png
-arrow
-1
-835 263 img/speed-arrow_Image.png
+800 300 img/Battery_full.png
+800 300 img/Battery_mid.png
+800 300 img/Battery_low.png
+800 300 img/Battery_empty.png
+800 300 img/Battery_unplugged.png
 map
 1
 30 319 img/map-bg_Image.png
@@ -70,9 +64,6 @@ btnFPV
 2
 136 690 img/FPV-off_Image.png
 136 690 img/Image 54_Image.png
-MapMin
-1
-400 400 img/minion-top-view_Image.png
 micro
 2
 1200 213 img/no-mic_Image.png

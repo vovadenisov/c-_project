@@ -15,12 +15,16 @@
 #include <container.h>
 #include <allclass.h>
 #include <form.h>
+#include <queue>
+#include "textcontainer.h"
+#include <cstdlib>
 
 using namespace std;
 
 class OurProject {
 public:
-    OurProject();
+
+    static OurProject * getInstance(queue<string>* command);
 
     //инициализация SDL lib
     bool init();
@@ -35,15 +39,34 @@ public:
     void makeClass(char* );
 
     //внешнее изменение состояния объектов.
-    void change();
+    void change(string, int);
 
     //функция обработчик событий
-    bool choiceEvent(SDL_Event* event);
+    void choiceEvent(SDL_Event* event);
 
     //надо ли отрисовываться
     bool active = true;
 
+    //прием файла от сервера
+    void  putVideo(uint8_t* data, int size);
+
+    void parseCommand();
+
+    void ActivateComm(string comm);
+    //пишем текст в текстовое поле
+    void printText(string);
+
+    void photo(int size, char* data);
+
 private:
+
+    static OurProject* p_instance;
+
+    OurProject(queue<string>*);
+
+    //печать одной строки текста
+    void printLineText(string, int);
+
     // востановление активности модулей. (только 1 модуль из группы должен быть активен)
     void correctModule(int, int);
 
@@ -58,5 +81,16 @@ private:
 
     //основная отображаемая поверхность.
     SDL_Surface* back;
+
+    SDL_Surface** video = NULL;
+
+    TTF_Font *fnt;
+    //max legth = 54; 11 lines;
+    TextContainer* textContainer;
+
+    bool selfie = false;
+
+    queue<string>* commands;
 };
+
 #endif // OURPROJECT_H

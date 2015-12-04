@@ -19,3 +19,22 @@ Container::Container(read params){
 void Container::decont(){
     isActive = 0;
 }
+
+void Container::enable(){
+    isActive = 1;
+}
+
+bool Container::isName(string myName){
+    if (name == myName){
+        return true;
+    }
+    return false;
+}
+
+bool Container::isVisible(){
+    return visible;
+}
+
+void Container::setVisible(bool param){
+    visible = param;
+}

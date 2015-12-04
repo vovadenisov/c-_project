@@ -11,6 +11,8 @@
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_image.h>
 #include <form.h>
+#include <queue>
+#include <utility>
 
 using namespace std;
 
@@ -20,10 +22,11 @@ public:
     Container(read Params);
     //обрабатывает возможное нажатие принимает координаты нажатия мыши,
     //вызывает функцию класа
-    virtual bool onClick(int x, int y){ return false;}
+    virtual bool onClick(int x, int y, queue<string>* commands){ return false;}
 
     //вызывается при приходе очередного массива состояний. вытаскивает нужное состояние по имени
-    virtual void change(map<string,state>* allState){}
+    virtual void change(pair<string, int> allState){}
+    virtual void change(pair<string, string>& allState){}
 
     //возвращает объект картинки
     virtual img Drow() {
@@ -35,12 +38,22 @@ public:
         return group;
     }
 
-    //выключение модуля
+    virtual bool isName(string name);
+
+    //включение модуля и связанных с ним сущностей
+    virtual void enable();
+
+    //выключение модуля и связанных с ним сущностей
     virtual void decont();
+
+    //проверка видимости объекта
+    bool isVisible();
+
+    void setVisible(bool param);
 
 protected:
     //функция перегружается для классов, где нужно движение или поворот
-    virtual void move(int newx,int newy, int angle){}
+    virtual void move(int angle){}
 
     //массив изображений
     vector<img> allImg;
@@ -53,6 +66,9 @@ protected:
 
     //группа по умолчанию -1 (без группы), кнопка выключения -2
     int group = -1;
+
+    //видимость объекта
+    bool visible = true;
 };
 
 #endif // CONTAINER_H
